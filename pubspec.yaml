@@ -1,0 +1,26 @@
+name: food_app
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.0.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  rive: ^0.11.16  
+  lottie: ^2.6.0
+  smooth_page_indicator: ^1.1.0
+  flutter_animated_button: ^2.0.3
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
