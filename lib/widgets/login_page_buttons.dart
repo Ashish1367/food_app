@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_button/flutter_animated_button.dart';
+import 'package:food_app/forms/sign_in_form.dart';
+import 'package:food_app/forms/sign_up_form.dart';
+import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 
 class LoginPageBt extends StatelessWidget {
   const LoginPageBt({super.key});
@@ -10,79 +12,91 @@ class LoginPageBt extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 80),
-          child: AnimatedButton(
-              text: 'Sign In',
+          child: WidgetAnimator(
+            incomingEffect: WidgetTransitionEffects.incomingSlideInFromBottom(
+                duration: const Duration(milliseconds: 440),
+                delay: const Duration(milliseconds: 230)),
+            child: Container(
+              height: 60,
               width: 200,
-              height: 70,
-              isReverse: true,
-              selectedGradientColor: LinearGradient(colors: [
-                const Color(0xFFffc0cb).withOpacity(.7),
-                const Color(0xFFffc0cb)
-              ]),
-              gradient: LinearGradient(colors: [
-                Colors.purple.withOpacity(0.6),
-                const Color.fromARGB(255, 191, 101, 207)
-              ]),
-              selectedTextColor: Colors.white,
-              transitionType: TransitionType.CENTER_LR_IN,
-              borderRadius: 50,
-              borderColor: const Color.fromARGB(255, 210, 133, 224),
-              borderWidth: 1,
-              onPress: () {
-                showGeneralDialog(
-                  barrierDismissible: true,
-                  barrierLabel: 'Sign Up',
-                  context: context,
-                  pageBuilder: (context, _, __) => Center(
-                    child: Container(
-                      height: 620,
-                      margin: const EdgeInsets.symmetric(horizontal: 14),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(40)),
-                      ),
-                    ),
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                    const Color.fromARGB(255, 216, 182, 244).withOpacity(.6),
+                    const Color.fromARGB(255, 172, 94, 236)
+                  ]),
+                  borderRadius: BorderRadius.circular(40),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 0,
+                      offset: const Offset(0, 1),
+                    )
+                  ]),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const SignInForm();
+                  }));
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
                   ),
-                );
-              }),
+                ),
+                child: const Text('Sign In',
+                    style: TextStyle(color: Colors.black)),
+              ),
+            ),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 40),
-          child: AnimatedButton(
-              text: 'Sign Up',
+          child: WidgetAnimator(
+            incomingEffect: WidgetTransitionEffects.incomingSlideInFromBottom(
+                duration: const Duration(milliseconds: 450),
+                delay: const Duration(milliseconds: 240)),
+            child: Container(
+              height: 60,
               width: 200,
-              height: 70,
-              isReverse: true,
-              selectedGradientColor: LinearGradient(colors: [
-                const Color(0xFFffc0cb).withOpacity(.7),
-                const Color(0xFFffc0cb)
-              ]),
-              gradient: LinearGradient(colors: [
-                Colors.purple.withOpacity(0.6),
-                const Color.fromARGB(255, 191, 101, 207)
-              ]),
-              selectedTextColor: Colors.white,
-              transitionType: TransitionType.CENTER_LR_IN,
-              borderColor: const Color.fromARGB(255, 210, 133, 224),
-              borderWidth: 1,
-              borderRadius: 50,
-              onPress: () {
-                showGeneralDialog(
-                  barrierDismissible: true,
-                  barrierLabel: 'Sign Up',
-                  context: context,
-                  pageBuilder: (context, _, __) => Center(
-                    child: Container(
-                      height: 620,
-                      margin: const EdgeInsets.symmetric(horizontal: 14),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(40)),
-                      ),
-                    ),
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                    const Color.fromARGB(255, 216, 182, 244).withOpacity(.6),
+                    const Color.fromARGB(255, 172, 94, 236)
+                  ]),
+                  borderRadius: BorderRadius.circular(40),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 0,
+                      offset: const Offset(0, 1),
+                    )
+                  ]),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const SignUpForm();
+                  }));
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
                   ),
-                );
-              }),
+                ),
+                child: const Text(
+                  'Sign Up',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ),
+          ),
         ),
       ],
     );

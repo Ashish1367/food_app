@@ -9,10 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  rive: ^0.11.16  
   lottie: ^2.6.0
   smooth_page_indicator: ^1.1.0
-  flutter_animated_button: ^2.0.3
+  widget_and_text_animator: ^1.1.5
 
 
 dev_dependencies:

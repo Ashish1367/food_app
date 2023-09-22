@@ -8,7 +8,7 @@ class Intro3 extends StatelessWidget {
     return Container(
       color: Colors.blueAccent,
       child: const Center(
-        child: Text('Intro Page 1'),
+        child: Text('Intro Page 3'),
       ),
     );
   }
