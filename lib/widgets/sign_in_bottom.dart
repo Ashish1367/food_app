@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/forms/sign_up_form.dart';
+import 'package:food_app/screen/home_page.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 
 class SignInBottom extends StatelessWidget {
@@ -31,7 +32,11 @@ class SignInBottom extends StatelessWidget {
                 ],
               ),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const HomePage();
+                  }));
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   shadowColor: Colors.transparent,

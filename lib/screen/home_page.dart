@@ -1,13 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/screen/home/activity.dart';
+import 'package:food_app/screen/home/home.dart';
+import 'package:food_app/screen/home/profile.dart';
+import 'package:food_app/screen/home/search.dart';
+import 'package:food_app/screen/home/upload.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+import 'package:food_app/widgets/bottom_nav.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late PageController _pageController = PageController();
+  int _currindex = 0;
+  @override
+  void initState() {
+    _pageController = PageController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _currindex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('HomePage'),
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: _onItemTapped,
+        children: const [
+          Home(),
+          Search(),
+          Upload(),
+          Activity(),
+          Profile(),
+        ],
+      ),
+      bottomNavigationBar: Bottom(
+        currentIndex: _currindex,
+        onItemTapped: _onItemTapped,
+        pageController: _pageController,
       ),
     );
   }
