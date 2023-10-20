@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "878339583590",
+    "project_id": "cookhub-50ce8",
+    "storage_bucket": "cookhub-50ce8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878339583590:android:0153b83bc50c66578587a7",
+        "android_client_info": {
+          "package_name": "com.example.food_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4HNFEEupI27_B0fE4OIHltRTZ8XJ5HGo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
