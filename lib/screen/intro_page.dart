@@ -3,7 +3,6 @@ import 'package:food_app/intro_page_screens/intro1.dart';
 import 'package:food_app/intro_page_screens/intro2.dart';
 import 'package:food_app/intro_page_screens/intro3.dart';
 import 'package:food_app/widgets/page_indicator.dart';
-// import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class IntroPage extends StatefulWidget {
   const IntroPage({super.key});

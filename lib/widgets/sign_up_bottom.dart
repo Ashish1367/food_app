@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/forms/sign_in_form.dart';
+import 'package:food_app/resources/auth_method.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 
 class SignUpBottom extends StatelessWidget {
-  const SignUpBottom({Key? key}) : super(key: key);
+  final TextEditingController userController;
+  final TextEditingController emailController;
+  final TextEditingController passController;
+  final TextEditingController cnfPassController;
+  const SignUpBottom(
+      {Key? key,
+      required this.userController,
+      required this.emailController,
+      required this.passController,
+      required this.cnfPassController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      // Wrap the SizedBox in a Column
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(
@@ -34,7 +44,13 @@ class SignUpBottom extends StatelessWidget {
                 ],
               ),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Authmethod().signUpUser(
+                      username: userController.text,
+                      email: emailController.text,
+                      password: passController.text,
+                      cnfpassword: cnfPassController.text);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amber,
                   shape: RoundedRectangleBorder(

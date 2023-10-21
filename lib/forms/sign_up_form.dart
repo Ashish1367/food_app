@@ -1,13 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/components/form_input.dart';
 import 'package:food_app/components/form_top.dart';
-// import 'package:food_app/forms/sign_in_form.dart';
 import 'package:food_app/screen/login_page.dart';
 import 'package:food_app/widgets/sign_up_bottom.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 
-class SignUpForm extends StatelessWidget {
+class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
+
+  @override
+  State<SignUpForm> createState() => _SignUpFormState();
+}
+
+class _SignUpFormState extends State<SignUpForm> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _userController = TextEditingController();
+  final TextEditingController _confirmController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _userController.dispose();
+    _confirmController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,33 +76,54 @@ class SignUpForm extends StatelessWidget {
                               WidgetTransitionEffects.incomingSlideInFromTop(
                                   duration: const Duration(milliseconds: 420),
                                   delay: const Duration(milliseconds: 220)),
-                          child: const FormInput(
-                              label: 'UserName', obscureText: false)),
+                          child: FormInput(
+                            label: 'UserName',
+                            obscureText: false,
+                            textEditingController: _userController,
+                            textInputType: TextInputType.text,
+                          )),
                       WidgetAnimator(
                           incomingEffect:
                               WidgetTransitionEffects.incomingSlideInFromTop(
                                   duration: const Duration(milliseconds: 430),
                                   delay: const Duration(milliseconds: 230)),
-                          child: const FormInput(
-                              label: 'Email', obscureText: false)),
+                          child: FormInput(
+                            label: 'Email',
+                            obscureText: false,
+                            textEditingController: _emailController,
+                            textInputType: TextInputType.emailAddress,
+                          )),
                       WidgetAnimator(
                           incomingEffect:
                               WidgetTransitionEffects.incomingSlideInFromBottom(
                                   duration: const Duration(milliseconds: 400),
                                   delay: const Duration(milliseconds: 200)),
-                          child: const FormInput(
-                              label: 'Password', obscureText: true)),
+                          child: FormInput(
+                            label: 'Password',
+                            obscureText: true,
+                            textEditingController: _passwordController,
+                            textInputType: TextInputType.text,
+                          )),
                       WidgetAnimator(
                           incomingEffect:
                               WidgetTransitionEffects.incomingSlideInFromBottom(
                                   duration: const Duration(milliseconds: 410),
                                   delay: const Duration(milliseconds: 210)),
-                          child: const FormInput(
-                              label: 'Confirm Password', obscureText: true)),
+                          child: FormInput(
+                            label: 'Confirm Password',
+                            obscureText: true,
+                            textEditingController: _confirmController,
+                            textInputType: TextInputType.text,
+                          )),
                     ],
                   ),
                 ),
-                const SignUpBottom(),
+                SignUpBottom(
+                  userController: _userController,
+                  emailController: _emailController,
+                  passController: _passwordController,
+                  cnfPassController: _confirmController,
+                ),
               ],
             ),
           ],

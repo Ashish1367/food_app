@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/screen/intro_page.dart';
-// import 'package:food_app/screen/login_page.dart';
 import 'package:lottie/lottie.dart';
 
 class Startup extends StatefulWidget {

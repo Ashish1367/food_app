@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/components/form_input.dart';
 import 'package:food_app/components/form_top.dart';
-// import 'package:food_app/forms/sign_up_form.dart';
 import 'package:food_app/screen/login_page.dart';
 import 'package:food_app/widgets/sign_in_bottom.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 
-class SignInForm extends StatelessWidget {
+class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
+
+  @override
+  State<SignInForm> createState() => _SignInFormState();
+}
+
+class _SignInFormState extends State<SignInForm> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,22 +61,28 @@ class SignInForm extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
               child: Column(
                 children: [
-                  // signup(lable: 'UserName'),
                   WidgetAnimator(
                       incomingEffect:
                           WidgetTransitionEffects.incomingSlideInFromTop(
                               duration: const Duration(milliseconds: 420),
                               delay: const Duration(milliseconds: 220)),
-                      child:
-                          const FormInput(label: 'Email', obscureText: false)),
+                      child: FormInput(
+                        label: 'Email',
+                        obscureText: false,
+                        textEditingController: _emailController,
+                        textInputType: TextInputType.emailAddress,
+                      )),
                   WidgetAnimator(
                       incomingEffect:
                           WidgetTransitionEffects.incomingSlideInFromTop(
                               duration: const Duration(milliseconds: 430),
                               delay: const Duration(milliseconds: 230)),
-                      child: const FormInput(
-                          label: 'Password', obscureText: true)),
-                  // signup(lable: 'Confirm Password', obscureText: true)
+                      child: FormInput(
+                        label: 'Password',
+                        obscureText: true,
+                        textEditingController: _passwordController,
+                        textInputType: TextInputType.text,
+                      )),
                 ],
               ),
             ),
