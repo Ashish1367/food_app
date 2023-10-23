@@ -86,7 +86,10 @@ class _SignInFormState extends State<SignInForm> {
                 ],
               ),
             ),
-            const SignInBottom(),
+            SignInBottom(
+              emailcontroller: _emailController,
+              passwordcontroller: _passwordController,
+            ),
           ],
         ),
       ),

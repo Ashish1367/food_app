@@ -1,10 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/components/snack_bar.dart';
 import 'package:food_app/forms/sign_up_form.dart';
+import 'package:food_app/resources/auth_method.dart';
 import 'package:food_app/screen/home_page.dart';
+
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 
-class SignInBottom extends StatelessWidget {
-  const SignInBottom({Key? key}) : super(key: key);
+class SignInBottom extends StatefulWidget {
+  final TextEditingController emailcontroller;
+  final TextEditingController passwordcontroller;
+  const SignInBottom(
+      {Key? key,
+      required this.emailcontroller,
+      required this.passwordcontroller})
+      : super(key: key);
+
+  @override
+  State<SignInBottom> createState() => _SignInBottomState();
+}
+
+class _SignInBottomState extends State<SignInBottom> {
+  void signinUser() async {
+    String res = await Authmethod().signInUser(
+        email: widget.emailcontroller.text,
+        password: widget.passwordcontroller.text);
+    if (res == "success") {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const HomePage()));
+    } else {
+      showSnackBar(res, context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +58,7 @@ class SignInBottom extends StatelessWidget {
                 ],
               ),
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const HomePage();
-                  }));
-                },
+                onPressed: signinUser,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   shadowColor: Colors.transparent,
