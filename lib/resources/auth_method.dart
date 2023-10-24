@@ -30,6 +30,8 @@ class Authmethod {
           'uid': cred.user!.uid,
         });
         res = "success";
+      } else {
+        res = "Please all the details";
       }
     } catch (e) {
       res = e.toString();

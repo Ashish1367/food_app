@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/components/snack_bar.dart';
 import 'package:food_app/forms/sign_in_form.dart';
 import 'package:food_app/resources/auth_method.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 
-class SignUpBottom extends StatelessWidget {
+class SignUpBottom extends StatefulWidget {
   final TextEditingController userController;
   final TextEditingController emailController;
   final TextEditingController passController;
@@ -15,6 +16,23 @@ class SignUpBottom extends StatelessWidget {
       required this.passController,
       required this.cnfPassController})
       : super(key: key);
+
+  @override
+  State<SignUpBottom> createState() => _SignUpBottomState();
+}
+
+class _SignUpBottomState extends State<SignUpBottom> {
+  void signupUser() async {
+    String res = await Authmethod().signUpUser(
+        username: widget.userController.text,
+        email: widget.emailController.text,
+        password: widget.passController.text,
+        cnfpassword: widget.cnfPassController.text);
+    if (res == "success") {
+    } else {
+      showSnackBar(res, context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +62,7 @@ class SignUpBottom extends StatelessWidget {
                 ],
               ),
               child: ElevatedButton(
-                onPressed: () {
-                  Authmethod().signUpUser(
-                      username: userController.text,
-                      email: emailController.text,
-                      password: passController.text,
-                      cnfpassword: cnfPassController.text);
-                },
+                onPressed: signupUser,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amber,
                   shape: RoundedRectangleBorder(
