@@ -28,6 +28,7 @@ class _SignUpBottomState extends State<SignUpBottom> {
         email: widget.emailController.text,
         password: widget.passController.text,
         cnfpassword: widget.cnfPassController.text);
+
     if (res == "success") {
     } else {
       showSnackBar(res, context);
