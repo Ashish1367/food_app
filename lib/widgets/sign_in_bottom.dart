@@ -21,9 +21,16 @@ class SignInBottom extends StatefulWidget {
 
 class _SignInBottomState extends State<SignInBottom> {
   void signinUser() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(child: CircularProgressIndicator());
+        });
+
     String res = await Authmethod().signInUser(
         email: widget.emailcontroller.text,
         password: widget.passwordcontroller.text);
+    Navigator.of(context).pop();
     if (res == "success") {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const HomePage()));

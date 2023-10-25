@@ -23,11 +23,18 @@ class SignUpBottom extends StatefulWidget {
 
 class _SignUpBottomState extends State<SignUpBottom> {
   void signupUser() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(child: CircularProgressIndicator());
+        });
+
     String res = await Authmethod().signUpUser(
         username: widget.userController.text,
         email: widget.emailController.text,
         password: widget.passController.text,
         cnfpassword: widget.cnfPassController.text);
+    Navigator.of(context).pop();
 
     if (res == "success") {
     } else {
