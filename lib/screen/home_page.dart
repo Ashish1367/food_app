@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/forms/sign_in_form.dart';
-import 'package:food_app/screen/home/activity.dart';
-import 'package:food_app/screen/home/home.dart';
-import 'package:food_app/screen/home/profile.dart';
-import 'package:food_app/screen/home/search.dart';
-import 'package:food_app/screen/home/upload.dart';
+import 'package:food_app/screen/homePages/activity.dart';
+import 'package:food_app/screen/homePages/home.dart';
+import 'package:food_app/screen/homePages/profile.dart';
+import 'package:food_app/screen/homePages/search.dart';
+import 'package:food_app/screen/homePages/upload.dart';
 import 'package:food_app/widgets/bottom_nav.dart';
 
 class HomePage extends StatefulWidget {
@@ -38,8 +38,10 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _signOut() async {
     await FirebaseAuth.instance.signOut();
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const SignInForm()));
+    if (mounted) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const SignInForm()));
+    }
   }
 
   @override

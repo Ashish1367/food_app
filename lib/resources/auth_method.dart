@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:food_app/models/user.dart' as model;
 
 class Authmethod {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -23,12 +24,15 @@ class Authmethod {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
-        // add user to firestore
-        await _firestore.collection("users").doc(cred.user!.uid).set({
-          'username': username,
-          'email': email,
-          'uid': cred.user!.uid,
-        });
+        model.User user =
+            model.User(username: username, email: email, uid: cred.user!.uid);
+
+        // adding user to firestore
+        await _firestore
+            .collection("users")
+            .doc(cred.user!.uid)
+            .set(user.tojson());
+
         res = "success";
       } else {
         res = "Please all the details";

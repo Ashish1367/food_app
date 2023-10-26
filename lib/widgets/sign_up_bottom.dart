@@ -37,6 +37,8 @@ class _SignUpBottomState extends State<SignUpBottom> {
     Navigator.of(context).pop();
 
     if (res == "success") {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const SignInForm()));
     } else {
       showSnackBar(res, context);
     }
