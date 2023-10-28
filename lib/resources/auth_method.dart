@@ -6,6 +6,13 @@ class Authmethod {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  Future<model.User> getUserdetails() async {
+    User currentuser = _auth.currentUser!;
+    DocumentSnapshot snap =
+        await _firestore.collection("users").doc(currentuser.uid).get();
+    return model.User.fromsnap(snap);
+  }
+
   //sign up method
   Future<String> signUpUser({
     required String username,
@@ -24,8 +31,11 @@ class Authmethod {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
-        model.User user =
-            model.User(username: username, email: email, uid: cred.user!.uid);
+        model.User user = model.User(
+          username: username,
+          email: email,
+          uid: cred.user!.uid,
+        );
 
         // adding user to firestore
         await _firestore
