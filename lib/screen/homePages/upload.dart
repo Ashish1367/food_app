@@ -19,17 +19,31 @@ class Upload extends StatefulWidget {
 class _UploadState extends State<Upload> {
   Uint8List? _file;
   final TextEditingController _discriptionController = TextEditingController();
+  bool _isloading = false;
 
   void postImage(String uid, String username) async {
     try {
+      setState(() {
+        _isloading = true;
+      });
       String res = await FirestoreMethod()
           .uploadPost(_discriptionController.text, _file!, uid, username);
       if (res == "success") {
+        setState(() {
+          _isloading = false;
+        });
         showSnackBar("Posted !", context);
+        clearimage();
       } else {
+        setState(() {
+          _isloading = false;
+        });
         showSnackBar(res, context);
       }
     } catch (e) {
+      setState(() {
+        _isloading = false;
+      });
       showSnackBar(e.toString(), context);
     }
   }
@@ -75,6 +89,10 @@ class _UploadState extends State<Upload> {
         });
   }
 
+  void clearimage() {
+    _file = null;
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -111,6 +129,12 @@ class _UploadState extends State<Upload> {
             ),
             body: Column(
               children: [
+                _isloading
+                    ? const LinearProgressIndicator()
+                    : const Padding(padding: EdgeInsets.only(top: 0)),
+                const Divider(
+                  color: Colors.transparent,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,

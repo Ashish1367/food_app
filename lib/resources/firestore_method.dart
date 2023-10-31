@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:food_app/models/upload.dart';
+import 'package:food_app/models/post.dart';
 import 'package:food_app/resources/storage_method.dart';
 import 'package:uuid/uuid.dart';
 
