@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -19,6 +21,7 @@ class Upload extends StatefulWidget {
 class _UploadState extends State<Upload> {
   Uint8List? _file;
   final TextEditingController _discriptionController = TextEditingController();
+  final TextEditingController _recipeController = TextEditingController();
   bool _isloading = false;
 
   void postImage(String uid, String username) async {
@@ -127,38 +130,41 @@ class _UploadState extends State<Upload> {
                     ))
               ],
             ),
-            body: Column(
-              children: [
-                _isloading
-                    ? const LinearProgressIndicator()
-                    : const Padding(padding: EdgeInsets.only(top: 0)),
-                const Divider(
-                  color: Colors.transparent,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          'https://media-del1-1.cdn.whatsapp.net/v/t61.24694-24/379696380_1040290580489912_5158158593023893496_n.jpg?ccb=11-4&oh=01_AdQhc5mctGTdyOhlsahDFwnFQOn8Fk8wBaoICujo7MQH1w&oe=65489E74&_nc_sid=000000&_nc_cat=108'),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      child: TextField(
-                        controller: _discriptionController,
-                        decoration: const InputDecoration(
-                          hintText: 'Write a caption',
-                          border: InputBorder.none,
-                        ),
-                        maxLines: 10,
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  _isloading
+                      ? const LinearProgressIndicator()
+                      : const Padding(padding: EdgeInsets.only(top: 0)),
+                  const Divider(
+                    color: Colors.transparent,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            'https://media-del1-1.cdn.whatsapp.net/v/t61.24694-24/379696380_1040290580489912_5158158593023893496_n.jpg?ccb=11-4&oh=01_AdQhc5mctGTdyOhlsahDFwnFQOn8Fk8wBaoICujo7MQH1w&oe=65489E74&_nc_sid=000000&_nc_cat=108'),
                       ),
-                    ),
-                    SizedBox(
-                      height: 45,
-                      width: 45,
-                      child: AspectRatio(
-                        aspectRatio: 487 / 451,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        child: TextField(
+                          controller: _discriptionController,
+                          decoration: const InputDecoration(
+                            hintText: 'Recipe Name',
+                            border: InputBorder.none,
+                          ),
+                          maxLines: 2,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.35,
+                        width: double.infinity,
                         child: Container(
                           decoration: BoxDecoration(
                               image: DecorationImage(
@@ -166,11 +172,25 @@ class _UploadState extends State<Upload> {
                                   fit: BoxFit.fill,
                                   alignment: FractionalOffset.topCenter)),
                         ),
-                      ),
-                    )
-                  ],
-                )
-              ],
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        child: TextField(
+                          controller: _recipeController,
+                          decoration: const InputDecoration(
+                              hintText: "Write Steps",
+                              border: InputBorder.none),
+                          maxLines: null,
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           );
   }

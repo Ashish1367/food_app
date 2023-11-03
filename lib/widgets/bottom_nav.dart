@@ -23,7 +23,7 @@ class _BottomState extends State<Bottom> {
         BottomNavigationBarItem(
             icon: Icon(Icons.home_filled),
             label: 'Home',
-            backgroundColor: Colors.orange),
+            backgroundColor: Color(0xFF1f99fa)),
         BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: 'Search',

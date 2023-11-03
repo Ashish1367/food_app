@@ -1,5 +1,6 @@
-import 'dart:typed_data';
+// ignore_for_file: prefer_const_constructors
 
+import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_app/models/post.dart';
 import 'package:food_app/resources/storage_method.dart';

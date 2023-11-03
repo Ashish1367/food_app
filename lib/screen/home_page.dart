@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/provider/user_provider.dart';
-import 'package:food_app/screen/homePages/activity.dart';
-import 'package:food_app/screen/homePages/home.dart';
-import 'package:food_app/screen/homePages/profile.dart';
-import 'package:food_app/screen/homePages/search.dart';
-import 'package:food_app/screen/homePages/upload.dart';
+import 'package:food_app/screen/home_page_screens/activity.dart';
+import 'package:food_app/screen/home_page_screens/home.dart';
+import 'package:food_app/screen/home_page_screens/profile.dart';
+import 'package:food_app/screen/home_page_screens/search.dart';
+import 'package:food_app/screen/home_page_screens/upload.dart';
 import 'package:food_app/widgets/bottom_nav.dart';
 import 'package:provider/provider.dart';
 

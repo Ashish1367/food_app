@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/intro_page_screens/intro1.dart';
-import 'package:food_app/intro_page_screens/intro2.dart';
-import 'package:food_app/intro_page_screens/intro3.dart';
+import 'package:food_app/screen/intro_page_screens/intro1.dart';
+import 'package:food_app/screen/intro_page_screens/intro2.dart';
+import 'package:food_app/screen/intro_page_screens/intro3.dart';
 import 'package:food_app/widgets/page_indicator.dart';
 
 class IntroPage extends StatefulWidget {
