@@ -80,9 +80,14 @@ class PostCard extends StatelessWidget {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.50,
               width: double.infinity,
-              child: Image.network(
-                snap["postUrl"],
-                fit: BoxFit.cover,
+              child: PageView.builder(
+                itemCount: snap["postUrl"].length,
+                itemBuilder: (context, index) {
+                  return Image.network(
+                    snap["postUrl"][index],
+                    fit: BoxFit.cover,
+                  );
+                },
               ),
             ),
 

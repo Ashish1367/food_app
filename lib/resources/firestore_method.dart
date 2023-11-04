@@ -9,20 +9,26 @@ import 'package:uuid/uuid.dart';
 class FirestoreMethod {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String> uploadPost(
-      String description, Uint8List file, String uid, String username) async {
+  Future<String> uploadPost(String recipe, String description,
+      List<Uint8List> files, String uid, String username) async {
     String res = "Some error occured";
     try {
-      String photoUrl =
-          await StorageMethod().uploadImageToStorage('posts', file, true);
+      List<String> photoUrls = [];
+      for (Uint8List file in files) {
+        String photoUrl =
+            await StorageMethod().uploadImageToStorage('posts', file, true);
+        photoUrls.add(photoUrl);
+      }
+
       String postId = Uuid().v1();
       Post post = Post(
+          recipe: recipe,
           description: description,
           uid: uid,
           username: username,
           postId: postId,
           datePublished: DateTime.now(),
-          postUrl: photoUrl,
+          postUrl: photoUrls,
           likes: []);
       _firestore.collection("Posts").doc(postId).set(post.tojson());
       res = "success";

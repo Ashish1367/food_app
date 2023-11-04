@@ -19,7 +19,7 @@ class Upload extends StatefulWidget {
 }
 
 class _UploadState extends State<Upload> {
-  Uint8List? _file;
+  List<Uint8List> _file = [];
   final TextEditingController _discriptionController = TextEditingController();
   final TextEditingController _recipeController = TextEditingController();
   bool _isloading = false;
@@ -29,8 +29,8 @@ class _UploadState extends State<Upload> {
       setState(() {
         _isloading = true;
       });
-      String res = await FirestoreMethod()
-          .uploadPost(_discriptionController.text, _file!, uid, username);
+      String res = await FirestoreMethod().uploadPost(_recipeController.text,
+          _discriptionController.text, _file, uid, username);
       if (res == "success") {
         setState(() {
           _isloading = false;
@@ -63,7 +63,7 @@ class _UploadState extends State<Upload> {
                 child: const Text('Take a Photo'),
                 onPressed: () async {
                   Navigator.of(context).pop();
-                  Uint8List file = await pickImage(ImageSource.camera);
+                  List<Uint8List> file = await pickImage(ImageSource.camera);
                   setState(() {
                     _file = file;
                   });
@@ -76,7 +76,7 @@ class _UploadState extends State<Upload> {
                   Navigator.of(context).pop();
                   Uint8List file = await pickImage(ImageSource.gallery);
                   setState(() {
-                    _file = file;
+                    _file.add(file);
                   });
                 },
               ),
@@ -93,19 +93,20 @@ class _UploadState extends State<Upload> {
   }
 
   void clearimage() {
-    _file = null;
+    _file = [];
   }
 
   @override
   void dispose() {
     super.dispose();
+    _recipeController.dispose();
     _discriptionController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
-    return _file == null
+    return _file.isEmpty
         ? Center(
             child: IconButton(
                 onPressed: () => _selectimage(context),
@@ -150,7 +151,7 @@ class _UploadState extends State<Upload> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.3,
                         child: TextField(
-                          controller: _discriptionController,
+                          controller: _recipeController,
                           decoration: const InputDecoration(
                             hintText: 'Recipe Name',
                             border: InputBorder.none,
@@ -165,22 +166,30 @@ class _UploadState extends State<Upload> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.35,
                         width: double.infinity,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: MemoryImage(_file!),
-                                  fit: BoxFit.fill,
-                                  alignment: FractionalOffset.topCenter)),
+                        child: PageView.builder(
+                          itemCount: _file.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: MemoryImage(_file[index]),
+                                      fit: BoxFit.fill,
+                                      alignment: FractionalOffset.topCenter)),
+                            );
+                          },
                         ),
                       )
                     ],
                   ),
+                  ElevatedButton(
+                      onPressed: () => _selectimage(context),
+                      child: const Text('Add Images')),
                   Column(
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.9,
                         child: TextField(
-                          controller: _recipeController,
+                          controller: _discriptionController,
                           decoration: const InputDecoration(
                               hintText: "Write Steps",
                               border: InputBorder.none),
