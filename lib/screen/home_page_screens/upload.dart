@@ -22,6 +22,7 @@ class _UploadState extends State<Upload> {
   List<Uint8List> _file = [];
   final TextEditingController _discriptionController = TextEditingController();
   final TextEditingController _recipeController = TextEditingController();
+  final TextEditingController _stepsController = TextEditingController();
   bool _isloading = false;
 
   void postImage(String uid, String username) async {
@@ -29,8 +30,13 @@ class _UploadState extends State<Upload> {
       setState(() {
         _isloading = true;
       });
-      String res = await FirestoreMethod().uploadPost(_recipeController.text,
-          _discriptionController.text, _file, uid, username);
+      String res = await FirestoreMethod().uploadPost(
+          _stepsController.text,
+          _recipeController.text,
+          _discriptionController.text,
+          _file,
+          uid,
+          username);
       if (res == "success") {
         setState(() {
           _isloading = false;
@@ -63,10 +69,12 @@ class _UploadState extends State<Upload> {
                 child: const Text('Take a Photo'),
                 onPressed: () async {
                   Navigator.of(context).pop();
-                  List<Uint8List> file = await pickImage(ImageSource.camera);
-                  setState(() {
-                    _file = file;
-                  });
+                  List<Uint8List>? files = await pickImages(ImageSource.camera);
+                  if (files != null) {
+                    setState(() {
+                      _file.addAll(files);
+                    });
+                  }
                 },
               ),
               SimpleDialogOption(
@@ -74,10 +82,13 @@ class _UploadState extends State<Upload> {
                 child: const Text('Choose from gallery'),
                 onPressed: () async {
                   Navigator.of(context).pop();
-                  Uint8List file = await pickImage(ImageSource.gallery);
-                  setState(() {
-                    _file.add(file);
-                  });
+                  List<Uint8List>? files =
+                      await pickImages(ImageSource.gallery);
+                  if (files != null) {
+                    setState(() {
+                      _file.addAll(files);
+                    });
+                  }
                 },
               ),
               SimpleDialogOption(
@@ -190,6 +201,21 @@ class _UploadState extends State<Upload> {
                         width: MediaQuery.of(context).size.width * 0.9,
                         child: TextField(
                           controller: _discriptionController,
+                          decoration: const InputDecoration(
+                            hintText: "Add a description",
+                            border: InputBorder.none,
+                          ),
+                          maxLines: 2,
+                        ),
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        child: TextField(
+                          controller: _stepsController,
                           decoration: const InputDecoration(
                               hintText: "Write Steps",
                               border: InputBorder.none),

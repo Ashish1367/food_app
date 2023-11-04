@@ -9,7 +9,7 @@ import 'package:uuid/uuid.dart';
 class FirestoreMethod {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String> uploadPost(String recipe, String description,
+  Future<String> uploadPost(String steps, String recipe, String description,
       List<Uint8List> files, String uid, String username) async {
     String res = "Some error occured";
     try {
@@ -24,6 +24,7 @@ class FirestoreMethod {
       Post post = Post(
           recipe: recipe,
           description: description,
+          steps: steps,
           uid: uid,
           username: username,
           postId: postId,
