@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
       body: PageView(
         controller: _pageController,
         onPageChanged: _onItemTapped,
-        physics: const NeverScrollableScrollPhysics(),
+        // physics: const NeverScrollableScrollPhysics(),
         children: const [
           Home(),
           Search(),
