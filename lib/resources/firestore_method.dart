@@ -30,12 +30,36 @@ class FirestoreMethod {
           postId: postId,
           datePublished: DateTime.now(),
           postUrl: photoUrls,
-          likes: []);
+          likes: 0);
       _firestore.collection("Posts").doc(postId).set(post.tojson());
       res = "success";
     } catch (e) {
       res = e.toString();
     }
     return res;
+  }
+
+  Future<void> like(String postId, int likes, bool plus) async {
+    try {
+      int incrementValue = plus ? -1 : 1;
+      await _firestore
+          .collection('Posts')
+          .doc(postId)
+          .update({'likes': FieldValue.increment(incrementValue)});
+    } catch (e) {
+      e.toString();
+    }
+  }
+
+  Future<void> disLike(String postId, int likes, bool minus) async {
+    try {
+      int incrementValue = minus ? -1 : 1;
+      await _firestore
+          .collection('Posts')
+          .doc(postId)
+          .update({'likes': FieldValue.increment(incrementValue)});
+    } catch (e) {
+      e.toString();
+    }
   }
 }

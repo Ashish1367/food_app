@@ -69,12 +69,10 @@ class _UploadState extends State<Upload> {
                 child: const Text('Take a Photo'),
                 onPressed: () async {
                   Navigator.of(context).pop();
-                  List<Uint8List>? files = await pickImages(ImageSource.camera);
-                  if (files != null) {
-                    setState(() {
-                      _file.addAll(files);
-                    });
-                  }
+                  Uint8List file = await pickImages(ImageSource.camera);
+                  setState(() {
+                    _file.add(file);
+                  });
                 },
               ),
               SimpleDialogOption(
@@ -82,13 +80,10 @@ class _UploadState extends State<Upload> {
                 child: const Text('Choose from gallery'),
                 onPressed: () async {
                   Navigator.of(context).pop();
-                  List<Uint8List>? files =
-                      await pickImages(ImageSource.gallery);
-                  if (files != null) {
-                    setState(() {
-                      _file.addAll(files);
-                    });
-                  }
+                  Uint8List file = await pickImages(ImageSource.gallery);
+                  setState(() {
+                    _file.add(file);
+                  });
                 },
               ),
               SimpleDialogOption(

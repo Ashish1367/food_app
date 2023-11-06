@@ -1,13 +1,35 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
+import 'package:food_app/resources/firestore_method.dart';
 import 'package:food_app/widgets/steps.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class PostCard extends StatelessWidget {
+class PostCard extends StatefulWidget {
   final snap;
+
   const PostCard({super.key, required this.snap});
+
+  @override
+  State<PostCard> createState() => _PostCardState();
+}
+
+class _PostCardState extends State<PostCard> {
+  bool plus = true;
+  bool minus = false;
+
+  void toggleLike() {
+    setState(() {
+      plus = !plus;
+    });
+  }
+
+  void toggleDisLike() {
+    setState(() {
+      minus = !minus;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +38,7 @@ class PostCard extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => Steps(steps: snap['steps'])));
+                builder: (context) => Steps(steps: widget.snap['steps'])));
       },
       child: Card(
         margin: const EdgeInsets.symmetric(vertical: 24, horizontal: 8),
@@ -46,7 +68,7 @@ class PostCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          snap["recipe"],
+                          widget.snap["recipe"],
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -87,26 +109,34 @@ class PostCard extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.50,
               width: double.infinity,
               child: PageView.builder(
-                itemCount: snap["postUrl"].length,
+                itemCount: widget.snap["postUrl"].length,
                 itemBuilder: (context, index) {
                   return Image.network(
-                    snap["postUrl"][index],
+                    widget.snap["postUrl"][index],
                     fit: BoxFit.cover,
                   );
                 },
               ),
             ),
 
-            //BOTTOM SECTION
+            //BOTTOM SECTION(ICONS)
             Row(
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    toggleLike();
+                    FirestoreMethod().like(
+                        widget.snap['postId'], widget.snap['likes'], plus);
+                  },
                   icon: Icon(MdiIcons.arrowUpBoldOutline),
                   color: const Color(0xFF00f7dc),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    toggleDisLike();
+                    FirestoreMethod().disLike(
+                        widget.snap['postId'], widget.snap['likes'], minus);
+                  },
                   icon: Icon(MdiIcons.arrowDownBoldOutline),
                   color: const Color(0xFF030000),
                 ),
@@ -129,7 +159,7 @@ class PostCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${snap['likes'].length} likes',
+                    '${widget.snap['likes']} likes',
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
 
@@ -143,7 +173,8 @@ class PostCard extends StatelessWidget {
                               color: Color.fromARGB(255, 63, 63, 63)),
                           children: [
                             TextSpan(
-                              text: 'description :-  ${snap['description']}',
+                              text:
+                                  'description :-  ${widget.snap['description']}',
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
@@ -168,7 +199,8 @@ class PostCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     child: Text(
-                      DateFormat.yMMMd().format(snap['datePublished'].toDate()),
+                      DateFormat.yMMMd()
+                          .format(widget.snap['datePublished'].toDate()),
                       style: const TextStyle(fontSize: 16),
                     ),
                   ),
