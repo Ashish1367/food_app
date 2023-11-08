@@ -1,10 +1,13 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
+import 'package:food_app/models/user.dart';
 import 'package:food_app/resources/firestore_method.dart';
 import 'package:food_app/widgets/steps.dart';
 import 'package:intl/intl.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/user_provider.dart';
 
 class PostCard extends StatefulWidget {
   final snap;
@@ -16,23 +19,9 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
-  bool plus = true;
-  bool minus = false;
-
-  void toggleLike() {
-    setState(() {
-      plus = !plus;
-    });
-  }
-
-  void toggleDisLike() {
-    setState(() {
-      minus = !minus;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final User user = Provider.of<UserProvider>(context).getUser;
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -124,31 +113,22 @@ class _PostCardState extends State<PostCard> {
               children: [
                 IconButton(
                   onPressed: () async {
-                    toggleLike();
                     FirestoreMethod().like(
-                        widget.snap['postId'], widget.snap['likes'], plus);
+                      widget.snap['postId'],
+                      user.uid,
+                      widget.snap['likes'],
+                    );
                   },
-                  icon: Icon(MdiIcons.arrowUpBoldOutline),
-                  color: const Color(0xFF00f7dc),
+                  icon: const Icon(Icons.favorite),
+                  color: Colors.red,
                 ),
-                IconButton(
-                  onPressed: () {
-                    toggleDisLike();
-                    FirestoreMethod().disLike(
-                        widget.snap['postId'], widget.snap['likes'], minus);
-                  },
-                  icon: Icon(MdiIcons.arrowDownBoldOutline),
-                  color: const Color(0xFF030000),
-                ),
-                IconButton(
-                    onPressed: () {}, icon: Icon(MdiIcons.commentTextOutline)),
-                IconButton(onPressed: () {}, icon: Icon(MdiIcons.share)),
+                IconButton(onPressed: () {}, icon: const Icon(Icons.comment)),
+                IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
                 Expanded(
                     child: Align(
                   alignment: Alignment.bottomRight,
                   child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(MdiIcons.bookmarkPlusOutline)),
+                      onPressed: () {}, icon: const Icon(Icons.bookmark)),
                 )),
               ],
             ),
@@ -159,7 +139,7 @@ class _PostCardState extends State<PostCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${widget.snap['likes']} likes',
+                    '${widget.snap['likes'].length} likes',
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
 

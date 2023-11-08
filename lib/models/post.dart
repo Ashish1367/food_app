@@ -12,7 +12,7 @@ class Post {
   final datePublished;
   final List<String> postUrl;
 
-  final int likes;
+  final likes;
 
   const Post({
     required this.recipe,

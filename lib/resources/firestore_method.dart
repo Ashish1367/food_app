@@ -30,7 +30,7 @@ class FirestoreMethod {
           postId: postId,
           datePublished: DateTime.now(),
           postUrl: photoUrls,
-          likes: 0);
+          likes: []);
       _firestore.collection("Posts").doc(postId).set(post.tojson());
       res = "success";
     } catch (e) {
@@ -39,25 +39,17 @@ class FirestoreMethod {
     return res;
   }
 
-  Future<void> like(String postId, int likes, bool plus) async {
+  Future<void> like(String postId, String uid, List likes) async {
     try {
-      int incrementValue = plus ? -1 : 1;
-      await _firestore
-          .collection('Posts')
-          .doc(postId)
-          .update({'likes': FieldValue.increment(incrementValue)});
-    } catch (e) {
-      e.toString();
-    }
-  }
-
-  Future<void> disLike(String postId, int likes, bool minus) async {
-    try {
-      int incrementValue = minus ? -1 : 1;
-      await _firestore
-          .collection('Posts')
-          .doc(postId)
-          .update({'likes': FieldValue.increment(incrementValue)});
+      if (likes.contains(uid)) {
+        _firestore.collection('Posts').doc(postId).update({
+          'likes': FieldValue.arrayRemove([uid])
+        });
+      } else {
+        _firestore.collection('Posts').doc(postId).update({
+          'likes': FieldValue.arrayUnion([uid])
+        });
+      }
     } catch (e) {
       e.toString();
     }
