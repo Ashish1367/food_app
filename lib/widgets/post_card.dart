@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
-
 import 'package:flutter/material.dart';
 import 'package:food_app/models/user.dart';
 import 'package:food_app/resources/firestore_method.dart';
+import 'package:food_app/screen/comment_page.dart';
 import 'package:food_app/widgets/steps.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +45,7 @@ class _PostCardState extends State<PostCard> {
                 const CircleAvatar(
                   radius: 16,
                   backgroundImage: NetworkImage(
-                      'https://media-del1-1.cdn.whatsapp.net/v/t61.24694-24/379696380_1040290580489912_5158158593023893496_n.jpg?ccb=11-4&oh=01_AdSKtAcBA392qJccHmycIIS2qzwNVMwt-IzpnYjSWxt1pA&oe=654C92F4&_nc_sid=000000&_nc_cat=108'),
+                      'https://static.wikia.nocookie.net/choujin-x/images/c/cf/Volume_05.png/revision/latest/scale-to-width-down/1000?cb=20221217033530'),
                 ),
 
                 //USERNAME
@@ -112,17 +112,24 @@ class _PostCardState extends State<PostCard> {
             Row(
               children: [
                 IconButton(
-                  onPressed: () async {
-                    FirestoreMethod().like(
-                      widget.snap['postId'],
-                      user.uid,
-                      widget.snap['likes'],
-                    );
-                  },
-                  icon: const Icon(Icons.favorite),
-                  color: Colors.red,
-                ),
-                IconButton(onPressed: () {}, icon: const Icon(Icons.comment)),
+                    onPressed: () async {
+                      FirestoreMethod().like(
+                        widget.snap['postId'],
+                        user.uid,
+                        widget.snap['likes'],
+                      );
+                    },
+                    icon: widget.snap['likes'].contains(user.uid)
+                        ? const Icon(Icons.favorite, color: Colors.red)
+                        : const Icon(Icons.favorite_border)),
+                IconButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return const Commnets();
+                      }));
+                    },
+                    icon: const Icon(Icons.comment)),
                 IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
                 Expanded(
                     child: Align(
