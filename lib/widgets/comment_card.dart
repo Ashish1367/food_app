@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CommentCard extends StatefulWidget {
-  const CommentCard({super.key});
+  final snap;
+  const CommentCard({Key? key, required this.snap}) : super(key: key);
 
   @override
   State<CommentCard> createState() => _CommentCardState();
@@ -18,27 +20,49 @@ class _CommentCardState extends State<CommentCard> {
             backgroundImage:
                 NetworkImage('https://i.postimg.cc/sfZnbTgN/v1a9mi7r92ib1.jpg'),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                RichText(
-                    text: const TextSpan(children: [
-                  TextSpan(
-                    text: 'Username :- ',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.black),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: widget.snap['name'],
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
+                        ),
+                        TextSpan(
+                            text: " ${widget.snap['text']}",
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black)),
+                      ],
+                    ),
                   ),
-                  TextSpan(
-                      text: " Yo Mara Comment Hai",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600, color: Colors.black)),
-                ]))
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      DateFormat.yMMMd()
+                          .format(widget.snap['datePublished'].toDate()),
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w400),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
+          Container(
+            padding: const EdgeInsets.all(8),
+            child: const Icon(
+              Icons.favorite,
+              size: 16,
+            ),
+          )
         ],
       ),
     );

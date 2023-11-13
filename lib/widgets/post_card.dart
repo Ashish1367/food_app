@@ -126,7 +126,9 @@ class _PostCardState extends State<PostCard> {
                     onPressed: () {
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
-                        return const Commnets();
+                        return Commnets(
+                          snap: widget.snap,
+                        );
                       }));
                     },
                     icon: const Icon(Icons.comment)),
